@@ -1,0 +1,30 @@
+#
+# Developer of skript: ReFlexoo
+# Version: 2.0
+#
+# permission all: staff.chat
+#
+
+
+command /staffchat [<text>]:
+	trigger:
+		if player has permission "staff.chat":
+			if arg 1 is not set:
+				if {staff.chat.%player%} is not set:
+					set {staff.chat.%player%} to true
+					send "&aVocê ativou o chat staff."
+					send "&aDigite para mandar mensagem no chat da staff."
+					stop
+				else:
+					delete {staff.chat.%player%} 
+					send "&cVocê desativou o chat staff"
+					stop
+on chat:
+	if {staff.chat.%player%} is set:
+		cancel event
+		loop all players:
+			if loop-player has permission "staff.Chat":
+				send "&e&lSTAFF %player's display name%&f: %message%" to loop-player
+				stop
+on load:
+	send "&a[rStaffChat] version 2.0 developer ReFlexoo" to console
